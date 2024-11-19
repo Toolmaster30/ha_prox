@@ -76,7 +76,7 @@ REPO="https://github.com/whiskerz007/proxmox_hassio_lxc"
 wget -qO - ${REPO}/tarball/master | tar -xz --strip-components=1
 
 # Modify LXC permissions to support Docker
-LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+LXC_CONFIG=/etc/pve/nodes/proxmox/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
 lxc.cgroup.devices.allow: a
 lxc.cap.drop:
@@ -88,7 +88,7 @@ lxc.hook.pre-start: sh -ec 'for module in aufs overlay; do modinfo $module; $(ls
 EOF
 
 # Set autodev hook to enable access to devices in container
-bash ./set_autodev_hook.sh $CTID
+#bash ./set_autodev_hook.sh $CTID
 
 # Set container timezone to match host
 cat << 'EOF' >> $LXC_CONFIG
@@ -100,13 +100,13 @@ msg "Starting LXC container..."
 pct start $CTID
 
 ### Begin LXC commands ###
-#alias lxc-cmd="lxc-attach -n $CTID --"
+alias lxc-cmd="lxc-attach -n $CTID --"
 # Prepare container OS
 msg "Setting up container OS..."
-#lxc-cmd dhclient -4
-#lxc-cmd sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
-#lxc-cmd locale-gen >/dev/null
-#lxc-cmd apt-get -y purge openssh-{client,server} >/dev/null
+lxc-cmd dhclient -4
+lxc-cmd sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
+lxc-cmd locale-gen >/dev/null
+lxc-cmd apt-get -y purge openssh-{client,server} >/dev/null
 
 # Update container OS
 msg "Updating container OS..."
