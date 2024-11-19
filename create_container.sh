@@ -91,9 +91,9 @@ EOF
 #bash ./set_autodev_hook.sh $CTID
 
 # Set container timezone to match host
-cat << 'EOF' >> $LXC_CONFIG
-lxc.hook.mount: sh -c 'ln -fs $(readlink /etc/localtime) ${LXC_ROOTFS_MOUNT}/etc/localtime'
-EOF
+#cat << 'EOF' >> $LXC_CONFIG
+#lxc.hook.mount: sh -c 'ln -fs $(readlink /etc/localtime) ${LXC_ROOTFS_MOUNT}/etc/localtime'
+#EOF
 
 # Setup container for Home Assistant
 msg "Starting LXC container..."
