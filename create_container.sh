@@ -100,7 +100,7 @@ msg "Starting LXC container..."
 pct start $CTID
 
 ### Begin LXC commands ###
-alias lxc-cmd="lxc-attach -n $CTID --"
+#alias lxc-cmd="lxc-attach -n $CTID --"
 # Prepare container OS
 msg "Setting up container OS..."
 lxc-cmd dhclient -4
